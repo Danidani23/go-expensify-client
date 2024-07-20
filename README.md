@@ -1,7 +1,7 @@
 # go-expensify-client
 
-[![Build Status](https://github.com/username/repo/actions/workflows/go.yml/badge.svg)](https://github.com/Danidani23/go-expensify-client/actions)
-[![Go Report Card](https://goreportcard.com/badge/github.com/username/repo)](https://goreportcard.com/report/github.com/Danidani23/go-expensify-client)
+[![Build Status](https://github.com/Danidani23/go-expensify-client/actions/workflows/go.yml/badge.svg)](https://github.com/Danidani23/go-expensify-client/actions)
+[![Go Report Card](https://goreportcard.com/badge/github.com/Danidani23/go-expensify-client)](https://goreportcard.com/report/github.com/Danidani23/go-expensify-client)
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/Danidani23/go-expensify-client)](https://pkg.go.dev/github.com/Danidani23/go-expensify-client)
 
 go-expensify is a Go package designed to provide a simple and efficient way to interact with Expensify’s API. This library enables developers to seamlessly integrate Expensify’s expense management capabilities into their Go applications, making it easier to manage expenses and reports programmatically.

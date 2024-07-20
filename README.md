@@ -23,3 +23,7 @@ May the force be with you! :)
 ## How to install
 
 ```go get github.com/Danidani23/go-expensify-client```
+
+## Examples
+
+You can find examples on how to use the package in ./cmd/example

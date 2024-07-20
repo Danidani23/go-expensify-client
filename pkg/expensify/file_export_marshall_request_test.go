@@ -46,7 +46,7 @@ func TestExportMarshal(t *testing.T) {
 	assert.NotNil(t, jBytes)
 	assert.NotEmpty(t, jString)
 
-	expectedJSONString := "{\"type\":\"file\",\"credentials\":{\"partnerUserID\":\"myId\",\"partnerUserSecret\":\"myPassword\"},\"inputSettings\":{\"type\":\"\",\"filters\":{\"reportIDList\":\"\",\"policyIDList\":\"\",\"startDate\":\"2023-01-01\",\"endDate\":\"\",\"approvedAfter\":\"\",\"markedAsExported\":\"\"},\"reportState\":\"\",\"Limit\":\"100\",\"employeeEmail\":\"\"},\"outputSettings\":{\"fileExtension\":\"pdf\",\"fileBaseName\":\"\",\"includeFullPageReceiptsPdf\":false},\"test\":\"true\",\"OnFinish\":null}"
+	expectedJSONString := "{\"type\":\"file\",\"onReceive\":{\"immediateResponse\":null},\"credentials\":{\"partnerUserID\":\"myId\",\"partnerUserSecret\":\"myPassword\"},\"inputSettings\":{\"filters\":{\"startDate\":\"2023-01-01\"},\"Limit\":\"100\"},\"outputSettings\":{\"fileExtension\":\"pdf\"},\"test\":\"true\"}"
 
 	assert.Equal(t, expectedJSONString, jString)
 

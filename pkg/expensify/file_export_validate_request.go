@@ -55,7 +55,7 @@ func (e *fileExportRequest) validate() error {
 
 	// output settings - check mandatory
 	if !common.Contains(validFileExtensions, e.OutputSettings.FileExtension) {
-		return fmt.Errorf("invalid output fileExtension received: '%s' . Valid extensions are:\n%s",
+		return fmt.Errorf("invalid output fileExtension received: '%s' . Valid extensions are:%s",
 			e.OutputSettings.FileExtension, validFileExtensions)
 	}
 

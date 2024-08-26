@@ -8,7 +8,17 @@ go-expensify is a Go package designed to provide a simple and efficient way to i
 
 ## Features
 
-- Report Exports
+
+### Report Exports
+
+This wrapper is very opinionated, meaning it hides the complexity but also
+some of the functions the API offers. I have done that because some of the
+features does not work, and some others in my opinion not so useful.
+
+Export extension:
+In general the API offers 'csv' or 'pdf' export. In the documentation you
+may read about other formats (like JSON) but you always get a 'csv' or 'pdf'
+back, regardless of the configuration you set. 
 
 I am working on the rest.
 
@@ -32,3 +42,24 @@ May the force be with you! :)
 ## Examples
 
 You can find examples on how to use the package in ./cmd/example
+
+## Notes
+
+### Timeout
+The exporter API of Expensify may get a bit slow, so it may take a while before you get a response (mostly for PDF-s). 
+You should consider that in case you are setting a context with timeout. 
+
+#### Limitations
+
+While the native API of expensify offers various export file formats, one hast to configure the export in Freemarker
+templates. 
+This wrapper hides this complexity, in exchange for limiting the output formats available. This package offers 2 formats:
+- JSON
+- PDF
+
+Pleas see the attached examples how to get your reports.
+
+## Known Issues
+
+When you configure email sending at the end of an export, the email never arrives. We suspect this is an error  on 
+Expensify's side, as we get no error messages back when we place the call.

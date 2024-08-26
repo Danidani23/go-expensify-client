@@ -9,25 +9,14 @@ import (
 	"net/url"
 )
 
-type response struct {
-	ResponseMessage string `json:"responseMessage"`
-	ResponseCode    int    `json:"responseCode"`
-}
-
-// ExecuteFileExport configures the export request. Everything that is marked a point is nullable (meaning it is optional to configure)
-// -filterByMarkedAsApprovedTag : pass the tag you are looking for
-func (c *ExpensifyClient) ExecuteFileExport(ctx context.Context) ([]byte, error) {
-	myReq := c.fileExportConfig
-
-	jsonData, err := json.Marshal(myReq)
-	if err != nil {
-		return nil, err
-	}
+// callExpensifyEndPoint calls any endpoint of Expensify. 'paramsJsonFormat' is what they call 'requestJobDescription' in the API docs
+func callExpensifyEndPoint(ctx context.Context, paramsJsonFormat []byte, reportFields []string, expenseFields []string) ([]byte, error) {
+	template := generateFreeMarkerTemplate(reportFields, expenseFields)
 
 	// Prepare URL-encoded form data
 	formData := url.Values{}
-	formData.Add("requestJobDescription", string(jsonData))
-	formData.Add("template", "expensify_template.ftl")
+	formData.Add("requestJobDescription", string(paramsJsonFormat))
+	formData.Add("template", template)
 
 	myUrl := baseURL + "?" + formData.Encode()
 
@@ -59,5 +48,6 @@ func (c *ExpensifyClient) ExecuteFileExport(ctx context.Context) ([]byte, error)
 	if myResponse.ResponseCode != 200 {
 		return nil, fmt.Errorf("%s", body)
 	}
+
 	return body, nil
 }

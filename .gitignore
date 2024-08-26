@@ -15,8 +15,15 @@
 *.out
 
 # Dependency directories (remove the comment below to include it)
-# vendor/
+vendor/
 
 # Go workspace file
 go.work
 go.work.sum
+
+# env variables
+.env
+
+# all files in temp
+temp/*
+cmd/example/how_to_download_images/cookies.json

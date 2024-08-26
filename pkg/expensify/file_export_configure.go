@@ -8,14 +8,14 @@ import (
 )
 
 type FileExportConfig struct {
-	FilterByReportId              *[]string
-	FilterByPolicyId              *[]string
+	FilterByReportId              []string
+	FilterByPolicyId              []string
 	FilterByStartDate             *time.Time
 	FilterByEndDate               *time.Time
 	FilterByApprovedAfterDate     *time.Time
 	FilterByMarkedAsApprovedTag   *string
 	FilterByEmployeeEmail         *string
-	FilterByReportState           *[]string
+	FilterByReportState           []string
 	LimitNumberOfReportsExported  *int
 	OutputFileExtension           string
 	OutputFileBaseName            *string
@@ -23,7 +23,7 @@ type FileExportConfig struct {
 	IsThisAtestCall               bool
 }
 
-func (c *ExpensifyClient) ConfigureFileExport(config FileExportConfig,
+func (c *Client) ConfigureFileExport(config FileExportConfig,
 	sendEmailOnFinish *OnFinishSendEmail,
 	markAsExportedOnFinish *OnFinishMarkAsExported,
 	uploadToSftpOnFinish *OnFinishSftpUploadData,
@@ -50,11 +50,11 @@ func (c *ExpensifyClient) ConfigureFileExport(config FileExportConfig,
 	// --- parsing and adding all parameters
 
 	if config.FilterByReportId != nil {
-		e.InputSettings.Filters.ReportIDList = strings.Join(*config.FilterByReportId, ",")
+		e.InputSettings.Filters.ReportIDList = strings.Join(config.FilterByReportId, ",")
 	}
 
 	if config.FilterByPolicyId != nil {
-		e.InputSettings.Filters.PolicyIDList = strings.Join(*config.FilterByPolicyId, ",")
+		e.InputSettings.Filters.PolicyIDList = strings.Join(config.FilterByPolicyId, ",")
 	}
 
 	if config.FilterByMarkedAsApprovedTag != nil {
@@ -90,7 +90,7 @@ func (c *ExpensifyClient) ConfigureFileExport(config FileExportConfig,
 	// REPORT STATE
 	if config.FilterByReportState != nil {
 		// we ensure there are no duplicates
-		myStrings := common.RemoveDuplicates(*config.FilterByReportState)
+		myStrings := common.RemoveDuplicates(config.FilterByReportState)
 
 		// we ensure that all passed states are valid
 		for _, state := range myStrings {
@@ -139,12 +139,7 @@ func (c *ExpensifyClient) ConfigureFileExport(config FileExportConfig,
 	}
 
 	// -- committing back to the Client
-
 	c.fileExportConfig = &e
 
-	/*
-		output, _ := json.MarshalIndent(e, "", "    ")
-		fmt.Println(string(output))
-	*/
 	return nil
 }

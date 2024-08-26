@@ -8,4 +8,4 @@ var validReportStates = []string{"OPEN", "SUBMITTED", "APPROVED", "REIMBURSED", 
 
 var timeFormat = "2006-01-02"
 
-var validFileExtensions = []string{"csv", "xls", "xlsx", "txt", "pdf", "json", "xml"}
+var validFileExtensions = []string{"pdf", "json"}

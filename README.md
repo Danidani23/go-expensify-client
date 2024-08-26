@@ -59,6 +59,13 @@ This wrapper hides this complexity, in exchange for limiting the output formats 
 
 Pleas see the attached examples how to get your reports.
 
+
+## Scraping receipts and invoices
+
+Unfortunately there is no official API endpoint to get the documents and images you have uploaded to your expenses.
+I have created an automated scraper that fetches these documents for you.
+It requires a set of session cookies to work. You can take a look at the provided example file.
+
 ## Known Issues
 
 When you configure email sending at the end of an export, the email never arrives. We suspect this is an error  on 

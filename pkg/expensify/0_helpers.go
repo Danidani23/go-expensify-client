@@ -5,9 +5,9 @@ import (
 	"strings"
 )
 
-// SplitFilenames takes a comma-separated string and returns a slice of filenames,
+// splitFilenames takes a comma-separated string and returns a slice of filenames,
 // or an error if any of the filenames are empty.
-func SplitFilenames(commaSeparatedFilenames string) ([]string, error) {
+func splitFilenames(commaSeparatedFilenames string) ([]string, error) {
 	filenames := strings.Split(commaSeparatedFilenames, ",")
 
 	for i, filename := range filenames {

@@ -59,7 +59,7 @@ func TestSplitFilenames(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result, err := SplitFilenames(tt.input)
+			result, err := splitFilenames(tt.input)
 			if tt.expectErr {
 				assert.Error(t, err)
 				assert.Contains(t, err.Error(), tt.errMsg)

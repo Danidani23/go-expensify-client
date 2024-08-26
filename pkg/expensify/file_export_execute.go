@@ -27,7 +27,7 @@ func (c *Client) ExecuteFileExport(ctx context.Context, reportFields []string, e
 
 	// Expensify does not return a []string with the report name, but a simple comma separated string
 	// we split this into actual report names
-	outReportNames, err := SplitFilenames(string(inBytes))
+	outReportNames, err := splitFilenames(string(inBytes))
 	if err != nil {
 		return nil, fmt.Errorf("error while splitting the names of the incoming reports: %w", err)
 	}

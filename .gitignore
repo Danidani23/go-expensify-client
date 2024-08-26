@@ -26,3 +26,4 @@ go.work.sum
 
 # all files in temp
 temp/*
+cmd/example/how_to_download_images/cookies.json

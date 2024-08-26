@@ -156,7 +156,7 @@ func main() {
 		log.Fatalln("error while fetching the file: ", err)
 	}
 	log.Println("response received")
-	log.Printf("created reports are: %s", createdReports)
+	log.Printf("created reports are: %v", createdReports)
 
 	// DownloadReport the report(s)
 	for _, report := range createdReports {

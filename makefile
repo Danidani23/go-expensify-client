@@ -29,7 +29,4 @@ test:
 	fi
 
 update-go-dev:
-	curl https://sum.golang.org/lookup/github.com/danidani23/go-expensify-client/@v/v2.0.0
-
-	curl https://proxy.golang.org/github.com/danidani23/go-expensify-client/@v/v2.0.0.info
-	curl https://sum.golang.org/lookup/github.com/danidani23/go-expensify-client@v1.4.1
+	curl https://sum.golang.org/lookup/github.com/danidani23/go-expensify-client/v2@v2.0.0

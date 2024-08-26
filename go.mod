@@ -1,4 +1,4 @@
-module github.com/Danidani23/go-expensify-client/v2
+module github.com/Danidani23/go-expensify-client
 
 go 1.23.0
 

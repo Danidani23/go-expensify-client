@@ -2,7 +2,7 @@ package expensify
 
 import (
 	"fmt"
-	"github.com/Danidani23/go-expensify-client/v2/pkg/common"
+	"github.com/Danidani23/go-expensify-client/pkg/common"
 	"strings"
 	"time"
 )

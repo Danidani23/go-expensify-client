@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"github.com/Danidani23/go-expensify-client/v2/pkg/expensify"
+	"github.com/Danidani23/go-expensify-client/pkg/expensify"
 	"github.com/joho/godotenv"
 	"log"
 	"os"

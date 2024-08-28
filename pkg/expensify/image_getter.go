@@ -112,3 +112,28 @@ func LoadCookiesFromJSON(filePath string) ([]*http.Cookie, error) {
 
 	return cookies, nil
 }
+
+// LoadCookiesFromString reads cookies from a JSON string and returns them
+func LoadCookiesFromString(cookiesJsonString string) ([]*http.Cookie, error) {
+	var jsonCookies []cookie
+
+	// Parse the JSON string into the jsonCookies slice
+	if err := json.Unmarshal([]byte(cookiesJsonString), &jsonCookies); err != nil {
+		return nil, fmt.Errorf("failed to decode cookies: %w", err)
+	}
+
+	var cookies []*http.Cookie
+	for _, c := range jsonCookies {
+		cookies = append(cookies, &http.Cookie{
+			Name:     c.Name,
+			Value:    c.Value,
+			Domain:   c.Domain,
+			Path:     c.Path,
+			Expires:  time.Unix(int64(c.ExpirationDate), 0),
+			Secure:   c.Secure,
+			HttpOnly: c.HttpOnly,
+		})
+	}
+
+	return cookies, nil
+}

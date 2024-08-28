@@ -45,6 +45,7 @@ var reportFieldNames = []string{
 }
 
 var expenseFieldNames = []string{
+
 	"amount",
 	"attendees",
 	"bank",

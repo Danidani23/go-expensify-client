@@ -9,13 +9,18 @@ import (
 	"net/url"
 )
 
-// callExpensifyEndPoint calls any endpoint of Expensify. 'paramsJsonFormat' is what they call 'requestJobDescription' in the API docs
-func callExpensifyEndPoint(ctx context.Context, paramsJsonFormat []byte, reportFields []string, expenseFields []string) ([]byte, error) {
+type response struct {
+	ResponseMessage string `json:"responseMessage"`
+	ResponseCode    int    `json:"responseCode"`
+}
+
+// callExpensifyExportEndPoint calls any endpoint of Expensify. 'paramsJsonFormat' is what they call 'requestJobDescription' in the API docs
+func callExpensifyExportEndPoint(ctx context.Context, requestParams []byte, reportFields []string, expenseFields []string) ([]byte, error) {
 	template := generateFreeMarkerTemplate(reportFields, expenseFields)
 
 	// Prepare URL-encoded form data
 	formData := url.Values{}
-	formData.Add("requestJobDescription", string(paramsJsonFormat))
+	formData.Add("requestJobDescription", string(requestParams))
 	formData.Add("template", template)
 
 	myUrl := baseURL + "?" + formData.Encode()

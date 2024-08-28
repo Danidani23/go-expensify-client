@@ -104,7 +104,6 @@ func main() {
 	// Get your secrets from env variables (or whichever way you prefer)
 	userID := os.Getenv("USERID")
 	userSecret := os.Getenv("USERSECRET")
-	myEmail := os.Getenv("MYEMAIL")
 
 	if userID == "" || userSecret == "" {
 		log.Fatalln("either userId or user userSecret is empty!")
@@ -122,7 +121,7 @@ func main() {
 		log.Fatalln("couldn't parse date: ", err)
 	}
 
-	config := expensify.FileExportConfig{
+	config := expensify.FileExportBaseConfig{
 		FilterByReportId:              nil,
 		FilterByPolicyId:              nil,
 		FilterByStartDate:             &filterDate,
@@ -132,48 +131,28 @@ func main() {
 		FilterByEmployeeEmail:         nil,
 		FilterByReportState:           nil,
 		LimitNumberOfReportsExported:  nil,
-		OutputFileExtension:           "json", // we only allow PDF or JSON
 		OutputFileBaseName:            nil,
 		OutputIncludeFullPageReceipts: false,
 		IsThisAtestCall:               true,
 	}
 
-	emailConf := expensify.OnFinishSendEmail{
-		Message:    "hello from Go",
-		Recipients: []string{myEmail},
-	}
-	// Commit your configuration
-	err = c.ConfigureFileExport(config, &emailConf, nil, nil)
+	// you can configure the below parameters and pass it if you like, but they are optional
+	/*
+		client.OnFinishMarkAsExportedConfig{}
+		client.OnFinishSftpUploadDataConfig{}
+		client.OnFinishSendEmailConfig{}
+	*/
 
+	myReports, err := c.GetReportsInJson(ctx, config, nil, nil, nil, reportFieldNames, expenseFieldNames)
 	if err != nil {
-		log.Fatalln("error while configuring file export: ", err)
+		log.Fatalf("error while fetching the reports: %s", err)
 	}
-	log.Println("configuration successful")
 
-	// Execute the export - you can configure which report fields and which expense fields you need
-	createdReports, err := c.ExecuteFileExport(ctx, reportFieldNames, expenseFieldNames)
-	if err != nil {
-		log.Fatalln("error while fetching the file: ", err)
-	}
-	log.Println("response received")
-	log.Printf("created reports are: %v", createdReports)
-
-	// DownloadReport the report(s)
-	for _, report := range createdReports {
-		log.Printf("starting to download this report: %s", report)
-		err = c.DownloadReport(ctx, report)
+	for _, report := range myReports {
+		filename, err := report.WriteToDisk(ctx, "temp")
 		if err != nil {
-			log.Fatalf("error while downloading this report: '%v', msg: %s", report, err)
+			log.Fatalln("error while writing the report to disk")
 		}
+		log.Println("the following file was written successfully: ", filename)
 	}
-	log.Println("reports successfully downloaded")
-
-	// Write them out to disk if you like
-	for _, report := range createdReports {
-		err = report.WriteToDisk(ctx, "temp")
-		if err != nil {
-			log.Fatalln(err)
-		}
-	}
-
 }

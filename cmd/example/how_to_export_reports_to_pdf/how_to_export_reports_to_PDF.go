@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"github.com/Danidani23/go-expensify-client/pkg/expensify"
+	"github.com/Danidani23/go-expensify-client/pkg/expensify/client"
 	"github.com/joho/godotenv"
 	"log"
 	"os"
@@ -40,7 +41,7 @@ func main() {
 		log.Fatalln("couldn't parse date: ", err)
 	}
 
-	config := expensify.FileExportConfig{
+	config := expensify.FileExportBaseConfig{
 		FilterByReportId:              nil,
 		FilterByPolicyId:              nil,
 		FilterByStartDate:             &filterDate,
@@ -56,7 +57,7 @@ func main() {
 		IsThisAtestCall:               true,
 	}
 
-	emailConf := expensify.OnFinishSendEmail{
+	emailConf := client.OnFinishSendEmail{
 		Message:    "hello from Go",
 		Recipients: []string{myEmail},
 	}
@@ -76,10 +77,10 @@ func main() {
 	log.Println("response received")
 	log.Printf("created reports are: %v", createdReports)
 
-	// DownloadReport the report(s)
+	// DownloadReports the report(s)
 	for _, report := range createdReports {
 		log.Printf("starting to download this report: %s", report)
-		err = c.DownloadReport(ctx, report)
+		err = c.DownloadReports(ctx, report)
 		if err != nil {
 			log.Fatalf("error while downloading this report: '%v', msg: %s", report, err)
 		}

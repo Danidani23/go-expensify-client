@@ -104,12 +104,12 @@ type Transaction struct {
 func main() {
 
 	// I am reading a previously exported file this file contains all standard Report and Expense fields
-	inBytes, err := os.ReadFile("temp/export4d21c24c-6257-48d0-8545-d3262756c0ab.json")
+	inBytes, err := os.ReadFile("temp/639f8addad161f1647111ddc6efe6c39dd11ef8fa4fd86980a8b71c5bb6b7fa6.json")
 	if err != nil {
 		log.Fatalln("error while opening the file: ", err)
 	}
 
-	myReport := make([]Report, 0)
+	myReport := Report{}
 	err = json.Unmarshal(inBytes, &myReport)
 	if err != nil {
 		log.Fatalln("error while unmarshalling the incoming data: ", err)

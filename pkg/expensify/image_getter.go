@@ -18,8 +18,8 @@ type Image struct {
 	Data     []byte
 }
 
-// GetImage get image downloads the image from a URL, it requires a set of active session cookies
-func GetImage(url string, cookies []*http.Cookie) (*Image, error) {
+// GetImageFromReceipt get image downloads the image from a URL, it requires a set of active session cookies
+func GetImageFromReceipt(url string, cookies []*http.Cookie) (*Image, error) {
 	myImage := Image{}
 
 	// Create a new HTTP client with a cookie jar
@@ -84,7 +84,7 @@ type cookie struct {
 	ID             int     `json:"id"`
 }
 
-// loadCookiesFromJSON reads cookies from a JSON file and returns them
+// LoadCookiesFromJSON  reads cookies from a JSON file and returns them
 func LoadCookiesFromJSON(filePath string) ([]*http.Cookie, error) {
 	file, err := os.Open(filePath)
 	if err != nil {

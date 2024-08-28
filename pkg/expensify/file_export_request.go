@@ -4,41 +4,20 @@ import (
 	"fmt"
 	"github.com/Danidani23/go-expensify-client/pkg/common"
 	"strings"
-	"time"
 )
 
-type FileExportConfig struct {
-	FilterByReportId              []string
-	FilterByPolicyId              []string
-	FilterByStartDate             *time.Time
-	FilterByEndDate               *time.Time
-	FilterByApprovedAfterDate     *time.Time
-	FilterByMarkedAsApprovedTag   *string
-	FilterByEmployeeEmail         *string
-	FilterByReportState           []string
-	LimitNumberOfReportsExported  *int
-	OutputFileExtension           string
-	OutputFileBaseName            *string
-	OutputIncludeFullPageReceipts bool
-	IsThisAtestCall               bool
-}
+func (e *fileExportRequest) init(config FileExportBaseConfig, sendEmailOnFinish *OnFinishSendEmailConfig,
+	markAsExportedOnFinish *OnFinishMarkAsExportedConfig, uploadToSftpOnFinish *OnFinishSftpUploadDataConfig,
+	partnerUserID string, partnerUserSecret string) error {
 
-func (c *Client) ConfigureFileExport(config FileExportConfig,
-	sendEmailOnFinish *OnFinishSendEmail,
-	markAsExportedOnFinish *OnFinishMarkAsExported,
-	uploadToSftpOnFinish *OnFinishSftpUploadData,
-) error {
-
-	e := fileExportRequest{}
-
-	e.Credentials.PartnerUserID = c.partnerUserID
-	e.Credentials.PartnerUserSecret = c.partnerUserSecret
+	e.Credentials.PartnerUserID = partnerUserID
+	e.Credentials.PartnerUserSecret = partnerUserSecret
 
 	e.Type = "file"
 	e.InputSettings.Type = "combinedReportData" // the API only accepts this value, fails if I pass an empty string
 	e.OnReceive.ImmediateResponse = []string{"returnRandomFileName"}
 	e.isConfigured = true
-	e.OutputSettings.FileExtension = config.OutputFileExtension
+	e.OutputSettings.FileExtension = config.outputFileExtension
 	e.OutputSettings.IncludeFullPageReceiptsPdf = config.OutputIncludeFullPageReceipts
 
 	if config.IsThisAtestCall {
@@ -137,9 +116,6 @@ func (c *Client) ConfigureFileExport(config FileExportConfig,
 		}
 		e.OnFinish = append(e.OnFinish, myOutput)
 	}
-
-	// -- committing back to the Client
-	c.fileExportConfig = &e
 
 	return nil
 }

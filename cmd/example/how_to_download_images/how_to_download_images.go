@@ -15,7 +15,7 @@ func main() {
 		log.Fatalf("error while loading the cookies: %s", err)
 	}
 
-	myImage, err := expensify.GetImage("https://www.expensify.com/receipts/w_0413aeadd2d0cf3df6280d3f05955798509daf19.pdf", cookies)
+	myImage, err := expensify.GetImageFromReceipt("https://www.expensify.com/receipts/w_0413aeadd2d0cf3df6280d3f05955798509daf19.pdf", cookies)
 	if err != nil {
 		log.Fatalf("error while fetching the image: %s", err)
 	}
